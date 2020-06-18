@@ -5,7 +5,8 @@ import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sb
-import json,os
+import json,os,math
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 def set_default(obj):
@@ -15,7 +16,7 @@ def set_default(obj):
 
 
 def load_data(filename):
-    with open("/Users/zyl_home/Desktop/本田/data/"+filename, "r+") as file:
+    with open("C:\\files\\本田\\data\\"+filename, "r+") as file:
         return json.loads(file.readline())
 
 
@@ -25,7 +26,7 @@ def handle_user_profile():
     for user_id in user_profile:
         user_profile_dic[user_id] = pd.Series(data=list(user_profile[user_id].values()), index=user_profile[user_id].keys())
     user_profile_df = pd.DataFrame(user_profile_dic)
-    print(user_profile_df[user_id].dropna())
+    # print(user_profile_df[user_id].dropna())
     # print(user_profile_df.max())
 
 def handle_item_profile():
@@ -45,35 +46,55 @@ def to_df(dic_obj):
     return pd.DataFrame(obj)
 
 
-if __name__ == '__main__':
-    user_id = "8ce922c9236a4451bb504ce5ab079244"
-    file_path = "/Users/zyl_home/Desktop/本田/data/"
-    pd.set_option('display.max_columns', 1000)
-    pd.set_option('display.max_rows', 1000)
-    pd.set_option('display.width', 1000)
-    pd.set_option('display.max_colwidth', 1000)
-    pd.set_option('display.unicode.ambiguous_as_wide', True)
-    pd.set_option('display.unicode.east_asian_width', True)
+def test():
     # recom_user_item_dic_a = load_data('recom_user_item_dic_a')
     # similar_user_article_dic = load_data('similar_user_article_dic')
     # similar_article_dic = load_data('similar_article_dic')
     # recom_user_item_dic_b = load_data('recom_user_item_dic_b')
     # recom_user_item_dic_c = load_data('recom_user_item_dic_c')
     # item_profile = load_data('item_profile')
-    user_item_score_dic = load_data('user_item_score_dic')
-    user_item_score_df = to_df(user_item_score_dic)
-    print(user_item_score_df[user_id].dropna())
+    # user_item_score_dic = load_data('user_item_score_dic')
     # similar_user_dic = load_data('similar_user_dic')
-    # user_profile = load_data('user_profile')
-    user_train_data_set = load_data("user_train_data_set")
-    # print(user_train_data_set[user_id])
-    item_index = []
-    for item_id in user_train_data_set[user_id]:
-        if user_train_data_set[user_id][item_id] == 1:
-            item_index.append(item_id)
-    handle_item_profile()
-
+    user_profile = load_data('user_profile')
+    # user_train_data_set = load_data("user_train_data_set")
+    user_profile_df = to_df(user_profile)
+    user_profile_df = user_profile_df.fillna(0.0)
+    print(type(user_profile_df['8ce922c9236a4451bb504ce5ab079244']))
+    # result = user_profile_df.corr(method=my_cos)
+    # print(result['8ce922c9236a4451bb504ce5ab079244']['83bec269c25d4cd38a4de8820ca78480'])
+    # user_a = user_profile_df['83bec269c25d4cd38a4de8820ca78480']
+    # user_b = user_profile_df['8ce922c9236a4451bb504ce5ab079244']
     # print(df['8ce922c9236a4451bb504ce5ab079244'].dropna())
     # print(df.idxmax()['8ce922c9236a4451bb504ce5ab079244'])
     # df.to_csv(file_path + "user_profile.csv", sep="\t")
     # df.to_excel(file_path + "user_profile.xls")
+
+
+def my_cos(a, b):
+    cos = 0.0
+    cos_a = 0.0
+    cos_b = 0.0
+    for i in range(len(a)):
+        cos += a[i] * b[i]
+        cos_a += a[i] ** 2
+        cos_b += b[i] ** 2
+    return cos/math.sqrt(cos_a * cos_b)
+
+def export_excel(filename):
+    json_data = load_data(filename)
+    df = to_df(json_data)
+    df.to_excel(file_path + filename + ".xls")
+
+
+if __name__ == '__main__':
+    user_id = "8ce922c9236a4451bb504ce5ab079244"
+    file_path = "C:\\files\\本田\\data\\"
+    pd.set_option('display.max_columns', 1000)
+    pd.set_option('display.max_rows', 1000)
+    pd.set_option('display.width', 1000)
+    pd.set_option('display.max_colwidth', 1000)
+    pd.set_option('display.unicode.ambiguous_as_wide', True)
+    pd.set_option('display.unicode.east_asian_width', True)
+    # export_excel("similar_user_dic")
+    test()
+
