@@ -6,7 +6,10 @@ import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sb
 import json,os,math
-from sklearn.metrics.pairwise import cosine_similarity
+# from sklearn.metrics.pairwise import cosine_similarity
+
+# file_path = "C:\\files\\本田\\data\\"
+file_path = "/Users/zyl_home/Documents/Desktop/本田/data/"
 
 
 def set_default(obj):
@@ -16,8 +19,12 @@ def set_default(obj):
 
 
 def load_data(filename):
-    with open("C:\\files\\本田\\data\\"+filename, "r+") as file:
+    with open(file_path+filename, "r+") as file:
         return json.loads(file.readline())
+
+
+def load_df(filename):
+    return to_df(load_data(filename))
 
 
 def handle_user_profile():
@@ -80,6 +87,7 @@ def my_cos(a, b):
         cos_b += b[i] ** 2
     return cos/math.sqrt(cos_a * cos_b)
 
+
 def export_excel(filename):
     json_data = load_data(filename)
     df = to_df(json_data)
@@ -88,7 +96,6 @@ def export_excel(filename):
 
 if __name__ == '__main__':
     user_id = "8ce922c9236a4451bb504ce5ab079244"
-    file_path = "C:\\files\\本田\\data\\"
     pd.set_option('display.max_columns', 1000)
     pd.set_option('display.max_rows', 1000)
     pd.set_option('display.width', 1000)
