@@ -22,11 +22,11 @@ def test3():
         'itemA': pd.Series(data=[1,2,5],index=['a','b','c']),
         'itemB': pd.Series(data=[4,5,6], index = ['b','c','d'])
     })
-    print(df)
+    print(df[df['itemA']>1])
     # print(df.isna())
-    print(np.mean(df))
-    print(np.median(df.dropna(axis=0)))
-    print(df.corr())
+    # print(np.mean(df))
+    # print(np.median(df.dropna(axis=0)))
+    # print(df.corr())
     # print(df.dropna(axis=0))
     # print(df.dropna(axis=1))
 

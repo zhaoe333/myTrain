@@ -8,8 +8,8 @@ import seaborn as sb
 import json,os,math
 # from sklearn.metrics.pairwise import cosine_similarity
 
-# file_path = "C:\\files\\本田\\data\\"
-file_path = "/Users/zyl_home/Documents/Desktop/本田/data/"
+file_path = "C:\\files\\本田\\data\\"
+# file_path = "/Users/zyl_home/Documents/Desktop/本田/data/"
 
 
 def set_default(obj):
