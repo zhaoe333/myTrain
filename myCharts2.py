@@ -9,6 +9,8 @@ from honda_test import load_df
 
 # plt.rc("font",family="SimHei",size="12")
 
+path = "/Users/zyl_home/Documents/udacity/AIPND-master/Matplotlib/data/"
+# path = "C:\\files\\AIPND-master\\Matplotlib\\data\\"
 
 @log_time
 def test():
@@ -55,12 +57,49 @@ def test3():
     plt.show()
 
 
+def test4():
+    fuel_econ = load_fuel_econ()
+    bins = np.arange(0, 58+2, 2)
+    fuel_econ['trans'] = fuel_econ['trans'].apply(lambda x: x.split(' ')[0])
+    order_list = fuel_econ['VClass'].value_counts().index.to_list()
+    print(order_list)
+    facet = sb.FacetGrid(data=fuel_econ, col='VClass', col_wrap=3, col_order=order_list)
+    facet.map(plt.hist, 'comb', bins=bins)
+    plt.show()
+
+
+def test5():
+    fuel_econ = load_fuel_econ()
+    sb.barplot(data=fuel_econ, x='VClass', y='comb', ci='sd')
+    plt.show()
+
+
+def test6():
+    fuel_econ = load_fuel_econ()
+    order_series = fuel_econ['make'].value_counts()
+    order_list = order_series[order_series > 80].index.tolist()
+    print(order_list)
+    facet = sb.FacetGrid(data=fuel_econ, col='make', col_wrap=6, col_order=order_list)
+    facet.map(plt.hist, 'comb')
+    plt.show()
+
+
+def test7():
+    fuel_econ = load_fuel_econ()
+    order_series = fuel_econ['make'].value_counts()
+    order_list = order_series[order_series > 80].index.tolist()
+    print(order_list)
+    sb.barplot(data=fuel_econ, x='make', y='comb', order=order_list)
+    # plt.xlabel('comb comb comb')
+    plt.show()
+
+
 def load_pokemon():
-    return pd.read_csv('C:\\files\\AIPND-master\\Matplotlib\\data\\pokemon.csv')
+    return pd.read_csv(path + 'pokemon.csv')
 
 
 def load_fuel_econ():
-    return pd.read_csv('C:\\files\\AIPND-master\\Matplotlib\\data\\fuel_econ.csv')
+    return pd.read_csv(path + 'fuel_econ.csv')
 
 
 if __name__ == '__main__':
@@ -70,5 +109,5 @@ if __name__ == '__main__':
     pd.set_option('display.max_colwidth', 1000)
     pd.set_option('display.unicode.ambiguous_as_wide', True)
     pd.set_option('display.unicode.east_asian_width', True)
-    test3()
+    test7()
 
