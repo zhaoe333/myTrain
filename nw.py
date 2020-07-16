@@ -20,6 +20,25 @@ def test():
     print(data*data)
 
 
+def f(p):
+    return 0.2 * p[0] ** 2 + p[1] ** 2
+
+
+def gradient1(p):
+    h = 1e-6
+    x = p[0]
+    y = p[1]
+    dx = (f([x+h/2, y]) - f([x-h/2, y]))/h
+    dy = (f([x, y+h/2]) - f([x, y-h/2]))/h
+    return dx, dy
+
+
+def gradient2(p):
+    return 0.4*p[0], 2*p[1]
+
+
 if __name__ == '__main__':
-    test()
+    p=[3,4]
+    print(gradient1(p))
+    print(gradient2(p))
 

@@ -38,6 +38,7 @@ def test2():
     plt.subplot(1, 2, 2)
     sb.violinplot(data=fuel_econ, x='VClass', y='comb', inner=None)
     plt.xticks(rotation=45)
+    print(plt.subplots())
     plt.show()
 
 
@@ -109,5 +110,5 @@ if __name__ == '__main__':
     pd.set_option('display.max_colwidth', 1000)
     pd.set_option('display.unicode.ambiguous_as_wide', True)
     pd.set_option('display.unicode.east_asian_width', True)
-    test7()
+    test2()
 

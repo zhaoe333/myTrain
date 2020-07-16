@@ -9,6 +9,7 @@ from torch import optim
 import torch.nn.functional as F
 import helper
 from collections import OrderedDict
+import PIL
 
 
 def test():
@@ -137,9 +138,12 @@ def check():
 
 
 if __name__ == '__main__':
-    trainloader, testloader = load_data2()
-    # test()
-    images, label = next(iter(trainloader))
-    helper.imshow(images[0, :])
+    # trainloader, testloader = load_data2()
+    # # test()
+    # images, label = next(iter(trainloader))
+    # helper.imshow(images[0, :])
+    img = PIL.Image.open("/Users/zyl_home/Desktop/1.jpeg")
+    img_re = img.resize((244,244))
+    print(np.array(img_re).shape)
 
 
